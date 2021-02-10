@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "db": "rm -rf src/entities & npx typeorm-model-generator -h 127.0.0.1 -d rebecca -p 3306 -u billy -x 123456 -e mysql -o src/entities --noConfig true --ce pascal --cp camel -a",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
