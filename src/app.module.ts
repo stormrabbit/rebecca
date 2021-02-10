@@ -1,8 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/users.module';
-import { RolesModule } from './roles/roles.module';
-
+import { Roles } from './entities/Roles';
+import { Users } from './entities/Users';
+import { Authorities } from './entities/Authorities';
+import { Endpoints } from './entities/Endpoints';
+import { Groups } from './entities/Groups';
+import { UsersModule } from './domain/users/users.module';
+import { RolesModule } from './domain/roles/roles.module';
+import { AuthoritiesModule } from './domain/authorities/authorities.module';
+import { EndpointsModule } from './domain/endpoints/endpoints.module';
+import { GroupsModule } from './domain/groups/groups.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -12,11 +19,14 @@ import { RolesModule } from './roles/roles.module';
       username: 'billy',
       password: '123456',
       database: 'rebecca',
-      entities: [__dirname + '/entities/*{.ts,.js}'],
+      entities: [Roles, Users, Authorities, Endpoints, Groups],
       synchronize: true,
     }),
-    RolesModule,
     UsersModule,
+    RolesModule,
+    AuthoritiesModule,
+    EndpointsModule,
+    GroupsModule,
   ],
 })
 export class AppModule {}
