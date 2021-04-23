@@ -26,6 +26,12 @@ export class UsersService {
     return await this.userRepostory.findOne(id);
   }
 
+  async retrieveByName(name: string): Promise<Users> {
+    return await this.userRepostory.query(
+      `select * from users where name ='${name}'`,
+    );
+  }
+
   async updateUserById(
     id: string,
     updateDto: UpdateUserDto,
