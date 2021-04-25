@@ -58,6 +58,15 @@ export class UsersController {
     };
   }
 
+  @Post('testlogger/:id/:nickname')
+  async testLogger(
+    @Query('query1') query: any,
+    @Param('id') id: any,
+    @Body() request,
+  ) {
+    return { id, query, ...request };
+  }
+
   @Post('loginlocal')
   @UseGuards(AuthGuard('local'))
   loginLocal(@Request() req) {

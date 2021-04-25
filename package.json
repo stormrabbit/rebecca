@@ -28,8 +28,11 @@
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/typeorm": "^7.1.5",
+    "chalk": "^4.1.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "log4js": "^6.3.0",
+    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
@@ -37,7 +40,9 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
-    "typeorm": "^0.2.31"
+    "stacktrace-js": "^2.0.2",
+    "typeorm": "^0.2.31",
+    "util": "^0.12.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",
