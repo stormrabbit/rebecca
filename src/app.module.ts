@@ -12,6 +12,8 @@ import { EndpointsModule } from './domain/endpoints/endpoints.module';
 import { GroupsModule } from './domain/groups/groups.module';
 import { AuthModule } from './domain/auth/auth.module';
 import { UsersController } from './domain/users/users.controller';
+import { AssignmentsModule } from './domain/assignments/assignments.module';
+import { RolesController } from './domain/roles/roles.controller';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -21,7 +23,7 @@ import { UsersController } from './domain/users/users.controller';
       username: 'billy',
       password: '123456',
       database: 'rebecca',
-      entities: [Roles, Users, Authorities, Endpoints, Groups],
+      entities: [__dirname + '/**/*{.ts,.js}'],
       synchronize: true,
     }),
     UsersModule,
@@ -30,8 +32,9 @@ import { UsersController } from './domain/users/users.controller';
     EndpointsModule,
     GroupsModule,
     AuthModule,
+    AssignmentsModule,
   ],
-  controllers: [UsersController],
+  controllers: [UsersController, RolesController],
   providers: [],
   exports: [],
 })

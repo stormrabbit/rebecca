@@ -1,17 +1,45 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { Roles } from 'src/entities/Roles';
+import { CreateRoleDto } from './dto/create.dto';
+import { UpdateRoleDto } from './dto/update.dto';
 import { RolesService } from './roles.service';
 
 @Controller('roles')
 export class RolesController {
   constructor(private rolesService: RolesService) {}
   @Get('list')
-  findAll(): Promise<Roles[]> {
-    return this.rolesService.findAll();
+  retrieveList(): Promise<Roles[]> {
+    return this.rolesService.retrieveList();
   }
 
-  //   @Get('list')
-  //   test(): any {
-  //     return 'test';
-  //   }
+  @Get(':id')
+  retrieveById(@Param('id') id: number): Promise<Roles> {
+    return this.rolesService.retrieveById(id);
+  }
+
+  @Post('create')
+  createRole(@Body() createDto: CreateRoleDto): Promise<Roles> {
+    return this.rolesService.createRole(createDto);
+  }
+
+  @Patch(':id')
+  updateRoleById(
+    @Param('id') id: number,
+    updateDto: UpdateRoleDto,
+  ): Promise<any> {
+    return this.rolesService.updateRolesById(id, updateDto);
+  }
+
+  @Delete(':id')
+  deleteRoleById(@Param('id') id: number) {
+    return this.rolesService.deleteRolesById(id);
+  }
 }

@@ -29,8 +29,9 @@ export class UsersController {
     private readonly authService: AuthService,
   ) {}
 
+  // 查询列表
   @Get('list')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   retrieveList(): Promise<Users[]> {
     return this.usersService.retrieveList();
   }
@@ -40,12 +41,13 @@ export class UsersController {
     return this.usersService.retrieveById(id);
   }
 
-  @Post('')
+  @Post('register')
   @UsePipes(new ValidationPipe())
   createUser(@Body() createDto: CreateUserDto): Promise<Users> {
     return this.usersService.createUser(createDto);
   }
 
+  // 登陆
   @Post('login')
   @UsePipes(new ValidationPipe())
   async loginUser(@Body() loginDto: LoginDto): Promise<any> {
@@ -58,15 +60,7 @@ export class UsersController {
     };
   }
 
-  @Post('testlogger/:id/:nickname')
-  async testLogger(
-    @Query('query1') query: any,
-    @Param('id') id: any,
-    @Body() request,
-  ) {
-    return { id, query, ...request };
-  }
-
+  // 本地登陆策略
   @Post('loginlocal')
   @UseGuards(AuthGuard('local'))
   loginLocal(@Request() req) {
