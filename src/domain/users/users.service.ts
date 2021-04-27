@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { Users } from '../../entities/Users';
 import { CreateUserDto } from './dto/create.dto';
 import { UpdateUserDto } from './dto/update.dto';
-import { UpdateUserResult } from './dto/update.result.dto';
 @Injectable()
 export class UsersService {
   constructor(
@@ -27,36 +26,30 @@ export class UsersService {
   }
 
   async retrieveByName(name: string): Promise<Users> {
-    return await this.userRepostory.query(
-      `select * from users where name ='${name}'`,
-    );
+    return await this.userRepostory.findOne({
+      where: {
+        name,
+      },
+    });
   }
 
-  async updateUserById(
-    id: string,
-    updateDto: UpdateUserDto,
-  ): Promise<UpdateUserResult> {
-    const result = new UpdateUserResult();
+  async updateUserById(id: string, updateDto: UpdateUserDto): Promise<any> {
     try {
       await this.userRepostory.update(id, updateDto);
-      result.result = '修改成功';
+      return '修改成功';
     } catch (error) {
-      result.result = `${error}`;
+      return `${error}`;
     }
-
-    return result;
   }
 
   async deleteUserById(id: number) {
     const user = await this.retrieveById(id);
     user.status = 1;
-    const result = new UpdateUserResult();
     try {
       await this.userRepostory.update(id, user);
-      result.result = '删除成功';
+      return '删除成功';
     } catch (error) {
-      result.result = `${error}`;
+      return `${error}`;
     }
-    return result;
   }
 }

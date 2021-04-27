@@ -36,7 +36,7 @@ export class RolesService {
       await this.rolesRepostory.update(id, updateDto);
       return { result: '修改成功' };
     } catch (error) {
-      return { result: `${error}` };
+      return { error: `${error}` };
     }
   }
 
@@ -47,7 +47,7 @@ export class RolesService {
       await this.rolesRepostory.update(id, Roles);
       return { result: '删除成功' };
     } catch (error) {
-      return { result: `${error}` };
+      return { error: `${error}` };
     }
   }
 }

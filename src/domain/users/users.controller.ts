@@ -14,14 +14,16 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBasicAuth, ApiTags } from '@nestjs/swagger';
 import { Users } from 'src/entities/Users';
 import { AuthService } from '../auth/auth.service';
 import { CreateUserDto } from './dto/create.dto';
 import { LoginDto } from './dto/login.dto';
 import { UpdateUserDto } from './dto/update.dto';
-import { UpdateUserResult } from './dto/update.result.dto';
 import { UsersService } from './users.service';
 
+@ApiTags('用户')
+@ApiBasicAuth() // 开启 swagger 验证
 @Controller('users')
 export class UsersController {
   constructor(
@@ -31,13 +33,15 @@ export class UsersController {
 
   // 查询列表
   @Get('list')
-  // @UseGuards(AuthGuard('jwt'))
-  retrieveList(): Promise<Users[]> {
-    return this.usersService.retrieveList();
+  @ApiBasicAuth() // 开启 swagger 验证
+  @UseGuards(AuthGuard('jwt'))
+  async retrieveList(): Promise<Users[]> {
+    const users: Users[] = await this.usersService.retrieveList();
+    return !!users ? users : [];
   }
 
-  @Get()
-  retrieveById(@Query() id: number): Promise<Users> {
+  @Get(':id')
+  retrieveById(@Param() id: number): Promise<Users> {
     return this.usersService.retrieveById(id);
   }
 
@@ -76,7 +80,7 @@ export class UsersController {
   updateUser(
     @Param() id: string,
     @Body() updateDto: UpdateUserDto,
-  ): Promise<UpdateUserResult> {
+  ): Promise<any> {
     return this.usersService.updateUserById(id, updateDto);
   }
 

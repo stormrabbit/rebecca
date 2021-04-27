@@ -13,6 +13,8 @@ export class AuthService {
 
   async validateUser(loginDto: LoginDto): Promise<Users | undefined> {
     const user = await this.usersService.retrieveByName(loginDto.name);
+    console.log(user);
+    console.log(loginDto);
     if (user && user.pwd === loginDto.pwd) {
       return user;
     }

@@ -6,12 +6,16 @@ import {
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/entities/Roles';
 import { CreateRoleDto } from './dto/create.dto';
 import { UpdateRoleDto } from './dto/update.dto';
 import { RolesService } from './roles.service';
 
+@ApiTags('角色')
 @Controller('roles')
 export class RolesController {
   constructor(private rolesService: RolesService) {}
@@ -31,9 +35,10 @@ export class RolesController {
   }
 
   @Patch(':id')
+  @UsePipes(new ValidationPipe())
   updateRoleById(
     @Param('id') id: number,
-    updateDto: UpdateRoleDto,
+    @Body() updateDto: UpdateRoleDto,
   ): Promise<any> {
     return this.rolesService.updateRolesById(id, updateDto);
   }

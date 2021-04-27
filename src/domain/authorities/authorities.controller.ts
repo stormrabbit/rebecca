@@ -7,11 +7,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { Authorities } from 'src/entities/authorities';
 import { AuthoritiesService } from './authorities.service';
 import { CreateAuthorityDto } from './dto/create.dto';
 import { UpdateAuthorityDto } from './dto/update.dto';
 
+@ApiTags('权限')
 @Controller('authorities')
 export class AuthoritiesController {
   constructor(private authoritiesService: AuthoritiesService) {}
@@ -33,7 +35,7 @@ export class AuthoritiesController {
   @Patch(':id')
   updateAuthorityById(
     @Param('id') id: number,
-    updateDto: UpdateAuthorityDto,
+    @Body() updateDto: UpdateAuthorityDto,
   ): Promise<any> {
     return this.authoritiesService.updateAuthorityById(id, updateDto);
   }

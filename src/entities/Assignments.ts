@@ -3,8 +3,21 @@ import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('assignments', { schema: 'rebecca' })
 export class Assignments extends BaseEntity {
-  static fromDto(assignmentDto: AssignmentDto, type: AssignmentsType) {
-    console.log(assignmentDto);
+  static fromObj({ x_id, x_name, y_id, y_name, status, type, id }: any = {}) {
+    const assignment = new Assignments();
+    assignment.id = id;
+    assignment.xId = x_id;
+    assignment.yId = y_id;
+    assignment.xName = x_name;
+    assignment.yName = y_name;
+    assignment.status = status;
+    assignment.type = type;
+    return assignment;
+  }
+  static fromDto(
+    assignmentDto: AssignmentDto,
+    type: AssignmentsType,
+  ): Assignments {
     if (!assignmentDto) {
       return null;
     }
@@ -12,7 +25,7 @@ export class Assignments extends BaseEntity {
     if (!sources || sources.length !== 2) {
       return null;
     }
-    if (!type || assignmentDto.type) {
+    if (!type) {
       return null;
     }
     const saveDto = new Assignments();
@@ -20,7 +33,7 @@ export class Assignments extends BaseEntity {
     saveDto.xName = sources[0];
     saveDto.yId = assignmentDto.yid;
     saveDto.yName = sources[1];
-    saveDto.type = type ? type : assignmentDto.type;
+    saveDto.type = type;
     return saveDto;
   }
   @PrimaryGeneratedColumn({ type: 'int', name: 'id', unsigned: true })

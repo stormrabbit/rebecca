@@ -4,6 +4,7 @@ import { Endpoints } from '../../entities/Endpoints';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateEndpointDto } from './dto/create.dto';
 import { UpdateEndpointDto } from './dto/update.dto';
+import { VerifyDTO } from '../assignments/dto/verify.dot';
 @Injectable()
 export class EndpointsService {
   constructor(
@@ -13,6 +14,15 @@ export class EndpointsService {
 
   async createEndpoint(createDto: CreateEndpointDto): Promise<Endpoints> {
     return await this.endpointsRepostory.save(createDto);
+  }
+
+  async retrieveByUrlAndMethod(verifyDto: VerifyDTO): Promise<Endpoints> {
+    return this.endpointsRepostory.findOne({
+      where: {
+        status: 0,
+        url: verifyDto.url,
+      },
+    });
   }
 
   async retrieveList(): Promise<Endpoints[]> {

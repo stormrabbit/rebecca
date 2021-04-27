@@ -30,7 +30,7 @@ export class AllExceptionFilter implements ExceptionFilter {
     response.status(status).json({
       statusCode: status,
       error: exception.message,
-      msg: `${status >= 500 ? '访问出错' : '链接异常'}`,
+      msg: `${status >= 500 ? '服务器异常' : '请求异常'}`,
     });
   }
 }

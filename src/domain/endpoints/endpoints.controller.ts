@@ -11,6 +11,9 @@ import {
 } from '@nestjs/common';
 import { CreateEndpointDto } from './dto/create.dto';
 import { UpdateEndpointDto } from './dto/update.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('资源')
 @Controller('endpoints')
 export class EndpointsController {
   constructor(private endpointsService: EndpointsService) {}
@@ -26,13 +29,16 @@ export class EndpointsController {
 
   @Post('create')
   createEndpoint(@Body() createDto: CreateEndpointDto): Promise<Endpoints> {
+    if (!createDto.parentId) {
+      delete createDto.parentId;
+    }
     return this.endpointsService.createEndpoint(createDto);
   }
 
   @Patch(':id')
   updateEndpointById(
     @Param('id') id: number,
-    updateDto: UpdateEndpointDto,
+    @Body() updateDto: UpdateEndpointDto,
   ): Promise<any> {
     return this.endpointsService.updateEndpointById(id, updateDto);
   }
