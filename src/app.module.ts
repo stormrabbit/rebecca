@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, HttpService, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Roles } from './entities/Roles';
 import { Users } from './entities/Users';
@@ -14,6 +14,8 @@ import { AuthModule } from './domain/auth/auth.module';
 import { UsersController } from './domain/users/users.controller';
 import { AssignmentsModule } from './domain/assignments/assignments.module';
 import { RolesController } from './domain/roles/roles.controller';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -33,9 +35,10 @@ import { RolesController } from './domain/roles/roles.controller';
     GroupsModule,
     AuthModule,
     AssignmentsModule,
+    HttpModule,
   ],
-  controllers: [UsersController, RolesController],
-  providers: [],
+  controllers: [UsersController, RolesController, AppController],
+  providers: [AppService],
   exports: [],
 })
 export class AppModule {}

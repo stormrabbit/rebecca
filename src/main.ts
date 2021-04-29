@@ -14,7 +14,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalInterceptors(new DataInterceptor());
   app.useGlobalFilters(new AllExceptionFilter());
-
+  app.enableCors();
   const options = new DocumentBuilder()
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' }) // 开启 bear 登陆
     .setTitle('Rebecca')
